@@ -40,79 +40,81 @@ export default function Appointments() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Appointments</h1>
+    <div className="p-8 bg-teal-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-teal-900">Appointments</h1>
 
       {appointments.length === 0 ? (
-        <p>No upcoming appointments.</p>
+        <p className="text-gray-600">No upcoming appointments.</p>
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">Client</th>
-              <th className="border p-2">Date</th>
-              <th className="border p-2">Time</th>
-              <th className="border p-2">Status</th>
-              <th className="border p-2">Payment Status</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointments.map((appt) => (
-              <tr key={appt.id} className="border">
-                <td className="border p-2">{appt.clientName}</td>
-                <td className="border p-2">{appt.date}</td>
-                <td className="border p-2">{appt.time}</td>
-                <td
-                  className={`border p-2 font-bold ${
-                    appt.status === "Completed"
-                      ? "text-green-600"
-                      : appt.status === "Cancelled"
-                      ? "text-red-600"
-                      : "text-yellow-600"
-                  }`}
-                >
-                  {appt.status}
-                </td>
-                <td
-                  className={`border p-2 ${
-                    appt.paymentStatus === "Completed"
-                      ? "text-blue-600"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {appt.paymentStatus || "Pending"}
-                </td>
-                <td className="border p-2 space-x-2">
-                  {appt.status === "Upcoming" && (
-                    <>
-                      <button
-                        onClick={() => updateStatus(appt.id, "Completed")}
-                        className="bg-green-500 text-white px-3 py-1 rounded"
-                      >
-                        ✅ Complete
-                      </button>
-                      <button
-                        onClick={() => updateStatus(appt.id, "Cancelled")}
-                        className="bg-red-500 text-white px-3 py-1 rounded"
-                      >
-                        ❌ Cancel
-                      </button>
-                    </>
-                  )}
-                  {appt.status === "Completed" && appt.paymentStatus !== "Completed" && (
-                    <button
-                      onClick={() => markAsPaid(appt.id)}
-                      className="bg-blue-500 text-white px-3 py-1 rounded"
-                    >
-                      💰 Mark as Paid
-                    </button>
-                  )}
-                </td>
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-teal-200 text-teal-900">
+                <th className="border p-4">Client</th>
+                <th className="border p-4">Date</th>
+                <th className="border p-4">Time</th>
+                <th className="border p-4">Status</th>
+                <th className="border p-4">Payment Status</th>
+                <th className="border p-4">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appointments.map((appt) => (
+                <tr key={appt.id} className="border hover:bg-teal-50 transition">
+                  <td className="border p-4 text-gray-800">{appt.clientName}</td>
+                  <td className="border p-4 text-gray-600">{appt.date}</td>
+                  <td className="border p-4 text-gray-600">{appt.time}</td>
+                  <td
+                    className={`border p-4 font-bold ${
+                      appt.status === "Completed"
+                        ? "text-green-600"
+                        : appt.status === "Cancelled"
+                        ? "text-red-600"
+                        : "text-yellow-600"
+                    }`}
+                  >
+                    {appt.status}
+                  </td>
+                  <td
+                    className={`border p-4 ${
+                      appt.paymentStatus === "Completed"
+                        ? "text-blue-600"
+                        : "text-gray-600"
+                    }`}
+                  >
+                    {appt.paymentStatus || "Pending"}
+                  </td>
+                  <td className="border p-4 space-x-2">
+                    {appt.status === "Upcoming" && (
+                      <>
+                        <button
+                          onClick={() => updateStatus(appt.id, "Completed")}
+                          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                        >
+                          ✅ Complete
+                        </button>
+                        <button
+                          onClick={() => updateStatus(appt.id, "Cancelled")}
+                          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                        >
+                          ❌ Cancel
+                        </button>
+                      </>
+                    )}
+                    {appt.status === "Completed" && appt.paymentStatus !== "Completed" && (
+                      <button
+                        onClick={() => markAsPaid(appt.id)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                      >
+                        💰 Mark as Paid
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

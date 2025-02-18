@@ -1,101 +1,77 @@
 "use client";
-import React, { useState } from "react";
-import Web3 from "web3";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function Login() {
-  const [role, setRole] = useState<"User" | "Therapist" | null>(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // MetaMask Login
-  const handleMetaMaskLogin = async () => {
-    if (window.ethereum) {
-      try {
-        const web3 = new Web3(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        const accounts = await web3.eth.getAccounts();
-        alert(`Logged in with MetaMask as ${accounts[0]}`);
-      } catch (error) {
-        console.error("MetaMask login failed", error);
-      }
-    } else {
-      alert("Please install MetaMask.");
-    }
-  };
-
-  // Standard Login
-  const handleStandardLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert(`Logged in as ${role} with email: ${email}`);
-  };
+  const [role, setRole] = useState<"user" | "therapist" | null>(null);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-4">Login</h1>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#34e89e] to-[#0f3443]">
+      <Card className="w-full max-w-md shadow-2xl p-6 rounded-2xl border border-gray-200 bg-white">
+        <CardHeader>
+          <CardTitle className="text-center text-3xl font-bold text-gray-800">
+            Login
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {!role ? (
+            <div className="space-y-4">
+              <Button
+                onClick={() => setRole("user")}
+                className="w-full bg-gradient-to-r from-teal-500 to-green-400 text-white py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+              >
+                Login as User
+              </Button>
+              <Button
+                onClick={() => setRole("therapist")}
+                className="w-full bg-gradient-to-r from-teal-500 to-green-400 text-white py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+              >
+                Login as Therapist
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <Label className="text-gray-700">Email</Label>
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
 
-      {/* Role Selection */}
-      {!role ? (
-        <div className="space-y-4">
-          <button
-            onClick={() => setRole("User")}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg"
-          >
-            Login as User
-          </button>
-          <button
-            onClick={() => setRole("Therapist")}
-            className="bg-green-500 text-white px-6 py-2 rounded-lg"
-          >
-            Login as Therapist
-          </button>
-        </div>
-      ) : (
-        <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-          <h2 className="text-xl font-semibold mb-2">Login as {role}</h2>
+              <Label className="text-gray-700">Password</Label>
+              <Input
+                type="password"
+                placeholder="Enter your password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
 
-          {/* MetaMask Login */}
-          <button
-            onClick={handleMetaMaskLogin}
-            className="w-full bg-yellow-500 text-white py-2 rounded-lg mb-4"
-          >
-            Connect with MetaMask
-          </button>
+              <Button className="w-full bg-gradient-to-r from-teal-500 to-green-400 text-white py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                Login
+              </Button>
 
-          {/* Standard Login */}
-          <form onSubmit={handleStandardLogin} className="space-y-4">
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-2 border border-gray-300 rounded"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full p-2 border border-gray-300 rounded"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg"
-            >
-              Login
-            </button>
-          </form>
+              <p className="text-gray-500 text-sm text-center">Or login using MetaMask</p>
 
-          {/* Back Button */}
-          <button
-            onClick={() => setRole(null)}
-            className="mt-4 text-gray-500 underline"
-          >
-            Go Back
-          </button>
-        </div>
-      )}
+              <Button
+                onClick={() => console.log("Connect with MetaMask")}
+                className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+              >
+                Connect with MetaMask
+              </Button>
+
+              <Button
+                variant="ghost"
+                className="w-full bg-gradient-to-r from-gray-400 to-gray-700 text-white py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+                onClick={() => setRole(null)}
+              >
+                Back
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

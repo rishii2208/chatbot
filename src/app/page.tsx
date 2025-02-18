@@ -1,97 +1,142 @@
-// import Link from "next/link";
-
-// export default function Home() {
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-//       <h1 className="text-4xl font-bold mb-4">Welcome to Mental Health DApp</h1>
-//       <p className="text-lg text-gray-600 mb-6">Connecting users with therapists anonymously.</p>
-
-//       <div className="flex space-x-4">
-//         {/* Button to Therapist Dashboard */}
-//         <Link href="/dashboard/therapist">
-//           <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
-//             Go to Therapist Dashboard
-//           </button>
-//         </Link>
-
-//         {/* Placeholder for User Dashboard (if needed) */}
-//         <Link href="/dashboard/user">
-//           <button className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
-//             Go to User Dashboard
-//           </button>
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }
-
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-100">
+
+     
+
+    <div className="min-h-screen bg-gradient-to-br from-[#34e89e] to-[#0f3443] text-white overflow-y-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-600">
+       {/* Progress Bar */}
+       <div
+        className="fixed top-0 left-0 h-1 bg-blue-500 z-50"
+        style={{ width: `${scrollProgress}%` }}
+      ></div>
       {/* Hero Section */}
-      <header className="text-center py-20 bg-blue-600 text-white">
-        <h1 className="text-5xl font-bold">Mental Health & Sex Education Platform, Anonymously</h1>
-        <p className="mt-4 text-lg max-w-2xl mx-auto">
+      <header className="text-center py-20">
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-5xl font-bold drop-shadow-lg"
+        >
+          Mental Health & Sex Education Platform, Anonymously
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="mt-4 text-lg max-w-2xl mx-auto opacity-90"
+        >
           A decentralized platform that connects users with therapists securely and anonymously using Web3.
-        </p>
-        <div className="mt-6 flex justify-center space-x-4">
+        </motion.p>
+        <motion.div
+          className="mt-6 flex justify-center space-x-4"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
           <Link href="/dashboard/therapist">
-            <button className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-200">
+            <Button className="bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg hover:scale-110 transition-all">
               Therapist Dashboard
-            </button>
+            </Button>
           </Link>
           <Link href="/dashboard/user">
-            <button className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700">
+            <Button className="bg-gradient-to-r from-gray-700 to-gray-900 text-white shadow-lg hover:scale-110 transition-all">
               User Dashboard
-            </button>
+            </Button>
           </Link>
-        </div>
+        </motion.div>
       </header>
 
       {/* Features Section */}
-      <section className="py-16 px-6 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-6">Why Choose Us?</h2>
+      <motion.section
+        className="py-16 px-6 max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <h2 className="text-3xl font-bold text-center mb-6 drop-shadow-lg">Why Choose Us?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">🔒 100% Anonymity</h3>
-            <p className="text-gray-600 mt-2">Stay anonymous while connecting with verified therapists.</p>
-          </div>
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">💰 Crypto Payments</h3>
-            <p className="text-gray-600 mt-2">Pay securely with cryptocurrency, no third-party tracking.</p>
-          </div>
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">💬 Live Support</h3>
-            <p className="text-gray-600 mt-2">Get instant help with secure, end-to-end encrypted chat.</p>
-          </div>
+          {[
+            { title: "🔒 100% Anonymity", desc: "Stay anonymous while connecting with verified therapists." },
+            { title: "💰 Crypto Payments", desc: "Pay securely with cryptocurrency, no third-party tracking." },
+            { title: "💬 Live Support", desc: "Get instant help with secure, end-to-end encrypted chat." }
+          ].map((feature, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            >
+              <Card className="bg-white text-gray-800 shadow-lg rounded-xl">
+                <CardContent className="p-6 text-center">
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+                  <p className="text-gray-600 mt-2">{feature.desc}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* How It Works Section */}
-      <section className="py-16 px-6 bg-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-6">How It Works</h2>
+      <motion.section
+        className="py-16 px-6 bg-gradient-to-br from-gray-300 to-gray-500 text-gray-900"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <h2 className="text-3xl font-bold text-center mb-6 drop-shadow-lg">How It Works</h2>
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">📝 Step 1</h3>
-            <p className="text-gray-600 mt-2">Sign up with your crypto wallet and choose your role.</p>
-          </div>
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">🩺 Step 2</h3>
-            <p className="text-gray-600 mt-2">Users connect with therapists for anonymous sessions.</p>
-          </div>
-          <div className="p-6 bg-white shadow-lg rounded-lg text-center">
-            <h3 className="text-xl font-semibold">💳 Step 3</h3>
-            <p className="text-gray-600 mt-2">Secure payments are processed via blockchain.</p>
-          </div>
+          {[
+            { step: "📝 Step 1", desc: "Sign up with your crypto wallet and choose your role." },
+            { step: "🩺 Step 2", desc: "Users connect with therapists for anonymous sessions." },
+            { step: "💳 Step 3", desc: "Secure payments are processed via blockchain." }
+          ].map((step, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            >
+              <Card className="bg-white text-gray-800 shadow-lg rounded-xl">
+                <CardContent className="p-6 text-center">
+                  <h3 className="text-xl font-semibold">{step.step}</h3>
+                  <p className="text-gray-600 mt-2">{step.desc}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="text-center py-6 bg-gray-800 text-white">
+      <motion.footer
+        className="text-center py-6 bg-gray-800 text-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
         <p>&copy; 2025 Mental Health DApp. All rights reserved.</p>
-      </footer>
+      </motion.footer>
     </div>
   );
 }

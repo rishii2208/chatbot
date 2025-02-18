@@ -18,20 +18,22 @@ const Messages = () => {
   ]);
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Messages</h1>
-      <div className="bg-white p-6 shadow-md rounded-lg">
-        {messages.length > 0 ? (
-          messages.map((msg) => (
-            <div key={msg.id} className="border-b py-4">
-              <h2 className="text-lg font-semibold text-gray-900">{msg.sender}</h2>
-              <p className="text-gray-700">{msg.message}</p>
-              <span className="text-sm text-gray-500">{msg.time}</span>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600">No messages yet.</p>
-        )}
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#34e89e] to-[#0f3443] p-8">
+      <div className="w-full max-w-2xl bg-white p-6 shadow-2xl rounded-2xl border border-gray-200">
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 text-center">Messages</h1>
+        <div className="space-y-4">
+          {messages.length > 0 ? (
+            messages.map((msg) => (
+              <div key={msg.id} className="border-b py-4">
+                <h2 className="text-lg font-semibold text-gray-900">{msg.sender}</h2>
+                <p className="text-gray-700">{msg.message}</p>
+                <span className="text-sm text-gray-500">{msg.time}</span>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600 text-center">No messages yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );

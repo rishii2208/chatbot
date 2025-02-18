@@ -45,14 +45,14 @@ const Payments = () => {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Payments</h1>
-      <div className="bg-white p-6 shadow-md rounded-lg">
+    <div className="p-8 bg-gradient-to-br from-[#34e89e] to-[#0f3443] min-h-screen text-gray-300">
+      <h1 className="text-2xl font-bold mb-6 text-white drop-shadow-lg">Payments</h1>
+      <div className="bg-white p-6 shadow-md rounded-lg text-gray-900">
         {transactions.length > 0 ? (
           transactions.map((payment) => (
             <div key={payment.id} className="border-b py-4">
-              <h2 className="text-lg font-semibold text-gray-900">{payment.patient}</h2>
-              <p className="text-gray-600">{payment.date}</p>
+              <h2 className="text-lg font-semibold text-black">{payment.patient}</h2>
+              <p className="text-gray-700">{payment.date}</p>
               <span className="text-green-600 font-medium">{payment.amount}</span>
               
               {/* Display the transaction hash and check its status */}
@@ -63,7 +63,7 @@ const Payments = () => {
                     const status = await checkTransactionStatus(payment.transactionHash);
                     alert(`Transaction Status: ${status}`);
                   }}
-                  className="mt-2 bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600"
+                  className="mt-2 bg-white text-[#02180f] px-4 py-1 rounded-md hover:bg-gray-200 transition duration-300"
                 >
                   Check Status
                 </button>
