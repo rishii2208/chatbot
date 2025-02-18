@@ -1,28 +1,26 @@
-import { EarningsCard } from "./components/EarningsCard";
-import { SessionList } from "./components/SessionList";
-import { ClientRequests } from "./components/ClientRequests";
-import { ChatAccess } from "./components/ChatAccess";
-import { ProfileSettings } from "./components/ProfileSettings";
+"use client";
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Appointments from "./components/AppointmentsList";
+import Messages from "./components/Messages";
+import Profile from "./components/Profile";
+import Payments from "./components/Payments";
 
 export default function TherapistDashboard() {
+  const [activeSection, setActiveSection] = useState<"appointments" | "messages" | "profile" | "payments">("appointments");
+
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">👩‍⚕️ Therapist Dashboard</h1>
-      
-      {/* Earnings & Sessions Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <EarningsCard />
-        <SessionList />
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <Sidebar setActiveSection={setActiveSection} />
+
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        {activeSection === "appointments" && <Appointments />}
+        {activeSection === "messages" && <Messages />}
+        {activeSection === "profile" && <Profile />}
+        {activeSection === "payments" && <Payments />}
       </div>
-
-      {/* Client Requests */}
-      <ClientRequests />
-
-      {/* Live Chat Access */}
-      <ChatAccess />
-
-      {/* Profile & Settings */}
-      <ProfileSettings />
     </div>
   );
 }
