@@ -183,7 +183,7 @@ export default function Chatbox() {
 
     const clearSession = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/clearSession", {
+            const res = await fetch("https://mentalhealthplatform.onrender.com/api/clearSession", {
                 method: "POST",
                 credentials: "include", // Send session cookie
             });
@@ -212,7 +212,7 @@ export default function Chatbox() {
     
     const fetchAnalysisHistory = async () => {
         try {
-          const response = await fetch("http://localhost:5000/api/analysisHistory", {
+          const response = await fetch("https://mentalhealthplatform.onrender.com/api/analysisHistory", {
             method: "GET",
             credentials: "include",
           });
@@ -275,7 +275,7 @@ export default function Chatbox() {
     
 
     useEffect(() => {
-        const newSocket = io("http://localhost:5000/", { 
+        const newSocket = io("https://mentalhealthplatform.onrender.com/", { 
             withCredentials: true,
             transports: ["websocket", "polling"] 
         });
@@ -335,7 +335,7 @@ export default function Chatbox() {
         }
 
         try {
-            const res = await fetch(`http://localhost:5000/api/report/${sessionId}`, {
+            const res = await fetch(`hhttps://mentalhealthplatform.onrender.com/api/report/${sessionId}`, {
                 method: "GET",
                 credentials: "include", // Ensure cookies are sent
                 headers: { "Content-Type": "application/json" },
@@ -381,7 +381,7 @@ export default function Chatbox() {
         formData.append("file", file);
     
         try {
-            const res = await fetch("http://localhost:5000/api/uploadReport", {
+            const res = await fetch("https://mentalhealthplatform.onrender.com/api/uploadReport", {
                 method: "POST",
                 body: formData,
                 credentials: "include",
